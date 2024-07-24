@@ -14,6 +14,15 @@ type LoggingService struct {
 	next Service
 }
 
+// argument - a Service
+// returns - a Service
+// returns a LoggingService struct which implements the Service interface
+func NewLoggingService(next Service) Service {
+	return &LoggingService{
+		next: next,
+	}
+}
+
 // receiver function from the Service interface for the LoggingService struct
 // argument - context
 // uses - LoggingService struct
@@ -27,15 +36,6 @@ func (s *LoggingService) GetCatFact(c context.Context) (fact *CatFact, err error
 		fmt.Printf("fact:%v \nerr:%v \ntime:%v \n", fact.Fact, err, time.Since(start))
 	}(time.Now())
 
-	// returns the response from GetCatFact function
+	// returns the response from the GetCatFact function
 	return s.next.GetCatFact(c)
-}
-
-// argument - a Service
-// returns - a Service
-// returns a LoggingService struct which implements the Service interface
-func NewLoggingService(next Service) Service {
-	return &LoggingService{
-		next: next,
-	}
 }

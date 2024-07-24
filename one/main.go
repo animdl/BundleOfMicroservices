@@ -1,8 +1,6 @@
 package main
 
 import (
-	"context"
-	"fmt"
 	"log"
 )
 
@@ -11,12 +9,8 @@ func main() {
 	service := NewCatFactService("https://catfact.ninja/fact")
 	service = NewLoggingService(service)
 
-	// calls the receiver function of the service
-	// this returns the fact from the url provided to the service
-	fact, err := service.GetCatFact(context.TODO())
-	if err != nil {
-		log.Fatal(err)
-	}
-	// prints the fact returned from the service
-	fmt.Printf("%+v\n", fact)
+	// assigns an api server a service to run
+	// starts the server on the given port
+	apiServer := NewApiServer(service)
+	log.Fatal(apiServer.Start(":3000"))
 }

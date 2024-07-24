@@ -20,6 +20,15 @@ type CatFactService struct {
 	url string
 }
 
+// argument - url
+// returns - a Service
+// in this case, we return the CatFactService struct which implements the Service interface
+func NewCatFactService(url string) Service {
+	return &CatFactService{
+		url: url,
+	}
+}
+
 // receiver function from the Service interface for the CatFactService struct
 // function that retrieves the fact itself
 // argument - context
@@ -50,13 +59,4 @@ func (s *CatFactService) GetCatFact(c context.Context) (*CatFact, error) {
 
 	// returns the fact
 	return fact, nil
-}
-
-// argument - url
-// returns - a Service
-// in this case, we return the CatFactService struct which implements the Service interface
-func NewCatFactService(url string) Service {
-	return &CatFactService{
-		url: url,
-	}
 }
